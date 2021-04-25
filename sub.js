@@ -1,10 +1,16 @@
 var mqtt = require('mqtt')
-var client = mqtt.connect('mqtt://localhost:1234')
-var topic = 'allasdashboard'
+var options ={
+    name: "deployment-u4a179e5",
+    username: "allaas",
+    password: "allaas",
+    port: "11867"
+}
+var client = mqtt.connect('mqtt://u4a179e5.en.emqx.cloud',options)
+var topic = 'dashboard'
 
 client.on('message', (topic, message)=>{
-    message = message.toString()
-    console.log(message)
+    message = JSON.parse(message)
+    console.log(typeof(message),message)
 })
 
 client.on('connect', ()=>{
