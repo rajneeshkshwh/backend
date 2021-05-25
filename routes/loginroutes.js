@@ -100,7 +100,7 @@ exports.login = async function(req,res){
 exports.validate = async function(req,res){
    var code = req.body.code;
    var email = req.body.email;
-   connection.query('SELECT * FROM users WHERE email = ?',[email], async function (error, results, fields){
+  connection.query('SELECT * FROM users WHERE email = ?',[email], async function (error, results, fields){
     if (error) {
       res.send({
         "code":400,
@@ -125,5 +125,28 @@ exports.validate = async function(req,res){
         }
       }
     }
-   })
+  })
+}
+
+exports.map = async function(req,res){
+  connection.query('SELECT * FROM geojson', async function(error, results, fields){
+    if(error){
+      res.send({
+        "status": "failed",
+        "error": error
+      })
+    }else{
+      if(results.length > 0){
+        res.send({
+          "status": "success",
+          "data": results
+        })
+      }else{
+        res.send({
+          "status": "failed",
+          "error": "error data fetching"
+        })
+      }
+    }
+  })
 }

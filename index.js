@@ -67,6 +67,7 @@ router.get('/', requirelogin,function(req,res){
 router.post('/register',loginroutes.register);
 router.post('/login',loginroutes.login);
 router.post('/validate',loginroutes.validate);
+router.get('/map',loginroutes.map);
 
 
 app.use('/api', router);
