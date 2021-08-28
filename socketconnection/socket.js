@@ -2,11 +2,10 @@ let io;
 
 module.exports = {
     init: httpServer => {
-        io = require('socket.io')(httpServer, {
+        io = require('socket.io')(httpServer,{
             cors: {
-                origin: "http://b984edd53bb3.ngrok.io",
-                methods: ["GET","POST"]
-            }
+                origin: '*',
+              }
         });
         return io;
     },

@@ -17,6 +17,7 @@ var topic = 'peds'
 var topic2 = 'bikes'
 var topic3 = 'cars'
 var topic4 = 'dashboard'
+var topic5 = 'maps'
 
 client.on('message', (topic, message)=>{
     message = message.toString()
@@ -34,11 +35,15 @@ client.on('message', (topic, message)=>{
     }
 })
 client2.on('message', (topic, message)=>{
-    message = JSON.parse(message)
-    console.log(message)
-    io.getIO().emit('datas', {action: 'messages', message: message.peds});
-    io.getIO().emit('datas', {action: 'messages2', message: message.bikes});
-    io.getIO().emit('datas', {action: 'messages3', message: message.cars});
+    if(topic == 'maps'){
+        message = JSON.parse(message)
+        console.log("mapdata",message)
+        io.getIO().emit('datas', {action: 'mapdata', message});
+    }else{
+        message = JSON.parse(message)
+        console.log(message)
+        io.getIO().emit('dashboard', {action: 'messages', message});
+    }
 })
 
 client.on('connect', ()=>{
@@ -48,6 +53,7 @@ client.on('connect', ()=>{
 })
 client2.on('connect', ()=>{
     client2.subscribe(topic4);
+    client2.subscribe(topic5);
 })
 
 var app = express();
